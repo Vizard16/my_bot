@@ -11,11 +11,12 @@ def generate_launch_description():
 
     joy_params = os.path.join(get_package_share_directory('my_bot'),'config','joystick.yaml')
 
-    joy_node = Node(
-            package='joy',
-            executable='joy_node',
-            parameters=[joy_params],
-         )
+    #When using web server take out this
+    # joy_node = Node(
+    #         package='joy',
+    #         executable='joy_node',
+    #         parameters=[joy_params],
+    #      )
 
     teleop_node = Node(
             package='teleop_twist_joy',
@@ -35,8 +36,11 @@ def generate_launch_description():
 
 
     return LaunchDescription([
-        
-        joy_node,
-        teleop_node
+        DeclareLaunchArgument(
+            'use_sim_time',
+            default_value='false',
+            description='Use sim time if true'),
+        #joy_node,
+        teleop_node,
         # twist_stamper       
     ])

@@ -19,9 +19,9 @@ teleop_node:
     axis_angular:  # Left thumb stick horizontal
       yaw: 0
     scale_angular:
-      yaw: 0.5
+      yaw: -0.5
     scale_angular_turbo:
-      yaw: 1.0
+      yaw: -1.0
 
     require_enable_button: false
     enable_button:  4 # Left shoulder button
