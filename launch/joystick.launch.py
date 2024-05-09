@@ -11,28 +11,27 @@ def generate_launch_description():
 
     joy_params = os.path.join(get_package_share_directory('my_bot'),'config','joystick.yaml')
 
-    #When using web server take out this
-    # joy_node = Node(
-    #         package='joy',
-    #         executable='joy_node',
-    #         parameters=[joy_params],
-    #      )
+    joy_node = Node(
+            package='joy',
+            executable='joy_node',
+            parameters=[joy_params, {'use_sim_time': use_sim_time}],
+         )
 
     teleop_node = Node(
             package='teleop_twist_joy',
             executable='teleop_node',
             name='teleop_node',
-            parameters=[joy_params],
+            parameters=[joy_params, {'use_sim_time': use_sim_time}],
             remappings=[('/cmd_vel','/diff_cont/cmd_vel_unstamped')]
          )
 
-    twist_stamper = Node(
-            package='twist_stamper',
-            executable='twist_stamper',
-            parameters=[{'use_sim_time': use_sim_time}],
-            remappings=[('/cmd_vel_in','/diff_cont/cmd_vel_unstamped'),
-                        ('/cmd_vel_out','/diff_cont/cmd_vel')]
-         )
+    # twist_stamper = Node(
+    #         package='twist_stamper',
+    #         executable='twist_stamper',
+    #         parameters=[{'use_sim_time': use_sim_time}],
+    #         remappings=[('/cmd_vel_in','/diff_cont/cmd_vel_unstamped'),
+    #                     ('/cmd_vel_out','/diff_cont/cmd_vel')]
+    #      )
 
 
     return LaunchDescription([
@@ -40,7 +39,7 @@ def generate_launch_description():
             'use_sim_time',
             default_value='false',
             description='Use sim time if true'),
-        #joy_node,
+        joy_node,
         teleop_node,
         # twist_stamper       
     ])
